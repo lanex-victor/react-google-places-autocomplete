@@ -4,16 +4,14 @@ import { intervalSetAutocomplete, parseGooglePlace } from './utils'
 
 class Autocomplete extends Component {
   componentDidMount () {
-    const { fields, id, onPlaceChanged, types } = this.props
+    const { fields, id, onPlaceChanged, types, componentRestrictions } = this.props
 
     const elem = document.getElementById(id)
     this.autocomplete = new window['google'].maps.places.Autocomplete(
       elem,
       {
         types,
-        componentRestrictions: {
-          country: 'us'
-        }
+        componentRestrictions: componentRestrictions
       }
     )
 
@@ -48,7 +46,8 @@ Autocomplete.propTypes = {
   id: PropTypes.string.isRequired,
   onPlaceChanged: PropTypes.func.isRequired,
   style: PropTypes.object,
-  types: PropTypes.arrayOf(PropTypes.string).isRequired
+  types: PropTypes.arrayOf(PropTypes.string).isRequired,
+  componentRestrictions: PropTypes.object,
 }
 
 Autocomplete.defaultProps = {
@@ -59,7 +58,8 @@ Autocomplete.defaultProps = {
     )
     console.log(place)
   },
-  types: ['address']
+  types: ['address'],
+  componentRestrictions: { country: 'au' }
 }
 
 export default Autocomplete
